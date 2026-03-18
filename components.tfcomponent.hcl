@@ -12,9 +12,8 @@ component "network" {
 component "cluster" {
   source = "./modules/cluster"
   providers = {
-    aws    = provider.aws.main
-    random = provider.random.main
-    # Map the new providers here
+    aws       = provider.aws.main
+    random    = provider.random.main
     time      = provider.time.main
     tls       = provider.tls.main
     cloudinit = provider.cloudinit.main
@@ -42,5 +41,35 @@ component "app" {
   source = "./modules/app"
   providers = {
     kubernetes = provider.kubernetes.main
+  }
+}
+
+# Ep2: Vault dynamic credentials — reads secrets from HCP Vault using
+# the OIDC JWT issued by HCP Terraform. No static secrets in config.
+# Depends on auth so IAM context is established first.
+component "secrets" {
+  source = "./modules/secrets"
+  providers = {
+    vault = provider.vault.main
+  }
+  inputs = {
+    vault_addr      = var.vault_addr
+    vault_namespace = var.vault_namespace
+    vault_role      = var.vault_role
+    vault_jwt_token = var.vault_identity_token
+    environment     = var.environment
+  }
+  depends_on = [component.auth]
+}
+
+# Ep2→Ep5 bridge: expose stable facts for the Ansible handshake in Episode 5.
+# These outputs mirror the 'config_facts' contract described in the series.
+output "config_facts" {
+  description = "Stable infrastructure metadata for downstream configuration (AAP, Ep5)"
+  value = {
+    cluster_endpoint = component.cluster.cluster_url
+    environment      = var.environment
+    region           = var.region
+    vault_secret_ver = component.secrets.secret_version
   }
 }

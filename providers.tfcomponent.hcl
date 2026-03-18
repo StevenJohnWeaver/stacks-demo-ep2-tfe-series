@@ -11,23 +11,16 @@ required_providers {
     source  = "hashicorp/random"
     version = "~> 3.5"
   }
+  # Ep2: Vault provider for dynamic secret management
+  vault = {
+    source  = "hashicorp/vault"
+    version = "~> 4.0"
+  }
   # Missing providers required by the EKS module
-  time       = { 
-    source = "hashicorp/time", 
-    version = "~> 0.9" 
-  }
-  tls        = {
-    source = "hashicorp/tls", 
-    version = "~> 4.0" 
-  }
-  cloudinit  = { 
-    source = "hashicorp/cloudinit", 
-    version = "~> 2.3" 
-  }
-  null       = { 
-    source = "hashicorp/null", 
-    version = "~> 3.2" 
-  }
+  time      = { source = "hashicorp/time",     version = "~> 0.9" }
+  tls       = { source = "hashicorp/tls",      version = "~> 4.0" }
+  cloudinit = { source = "hashicorp/cloudinit", version = "~> 2.3" }
+  null      = { source = "hashicorp/null",      version = "~> 3.2" }
 }
 
 provider "aws" "main" {
@@ -52,6 +45,13 @@ provider "kubernetes" "main" {
     token                  = component.auth.token
   }
 }
+
+# Ep2: Vault provider — configured per-component in modules/secrets/main.tf.
+# Authentication uses the OIDC JWT from HCP Terraform (vault identity_token),
+# so no static Vault token ever appears in configuration.
+# The provider block at the Stack level declares the requirement only;
+# the actual auth_login_jwt config lives inside the secrets module.
+provider "vault" "main" {}
 
 provider "random" "main" {}
 provider "time" "main" {}
