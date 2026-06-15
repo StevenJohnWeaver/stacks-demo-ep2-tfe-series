@@ -11,7 +11,6 @@ identity_token "vault" {
 }
 
 deployment "development" {
-  destroy = true
   inputs = {
     region             = "us-east-1"
     role_arn           = "arn:aws:iam::314146291426:role/stacks-steve-weaver-demo-org-Stacks"
@@ -30,7 +29,6 @@ deployment "development" {
 }
 
 deployment "staging" {
-  destroy = true
   inputs = {
     region             = "us-east-1"
     role_arn           = "arn:aws:iam::314146291426:role/stacks-steve-weaver-demo-org-Stacks"
@@ -49,7 +47,6 @@ deployment "staging" {
 }
 
 deployment "production" {
-  destroy = true
   inputs = {
     region             = "us-west-2"
     role_arn           = "arn:aws:iam::314146291426:role/stacks-steve-weaver-demo-org-Stacks"
