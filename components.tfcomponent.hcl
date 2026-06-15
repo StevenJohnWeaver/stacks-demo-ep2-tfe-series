@@ -53,11 +53,7 @@ component "secrets" {
     vault = provider.vault.main
   }
   inputs = {
-    vault_addr      = var.vault_addr
-    vault_namespace = var.vault_namespace
-    vault_role      = var.vault_role
-    vault_jwt_token = var.vault_identity_token
-    environment     = var.environment
+    environment = var.environment
   }
   depends_on = [component.auth]
 }

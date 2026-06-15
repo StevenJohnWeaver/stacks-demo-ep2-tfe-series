@@ -51,7 +51,17 @@ provider "kubernetes" "main" {
 # so no static Vault token ever appears in configuration.
 # The provider block at the Stack level declares the requirement only;
 # the actual auth_login_jwt config lives inside the secrets module.
-provider "vault" "main" {}
+provider "vault" "main" {
+  config {
+    address   = var.vault_addr
+    namespace = var.vault_namespace
+
+    auth_login_jwt {
+      role = var.vault_role
+      jwt  = var.vault_identity_token
+    }
+  }
+}
 
 provider "random" "main" {}
 provider "time" "main" {}
