@@ -21,7 +21,7 @@ deployment "development" {
     vpc_cidr           = "10.100.0.0/16"
     environment        = "dev"
     # Ep2: Vault dynamic credentials
-    vault_addr           = "https://YOUR-VAULT-CLUSTER.vault.hashicorp.cloud"
+    vault_addr           = "https://ep2-demo-public-vault-d5ee5dae.29f8fcee.z1.hashicorp.cloud:8200"
     vault_namespace      = "admin"
     vault_role           = "hcp-terraform-ep2-dev"
     vault_identity_token = identity_token.vault.jwt
@@ -39,7 +39,7 @@ deployment "staging" {
     vpc_cidr           = "10.101.0.0/16"
     environment        = "staging"
     # Ep2: Vault dynamic credentials
-    vault_addr           = "https://YOUR-VAULT-CLUSTER.vault.hashicorp.cloud"
+    vault_addr           = "https://ep2-demo-public-vault-d5ee5dae.29f8fcee.z1.hashicorp.cloud:8200"
     vault_namespace      = "admin"
     vault_role           = "hcp-terraform-ep2-staging"
     vault_identity_token = identity_token.vault.jwt
@@ -57,7 +57,7 @@ deployment "production" {
     vpc_cidr           = "10.102.0.0/16"
     environment        = "prod"
     # Ep2: Vault dynamic credentials
-    vault_addr           = "https://YOUR-VAULT-CLUSTER.vault.hashicorp.cloud"
+    vault_addr           = "https://ep2-demo-public-vault-d5ee5dae.29f8fcee.z1.hashicorp.cloud:8200"
     vault_namespace      = "admin"
     vault_role           = "hcp-terraform-ep2-prod"
     vault_identity_token = identity_token.vault.jwt
