@@ -66,6 +66,12 @@ component "secrets" {
 # These outputs mirror the 'config_facts' contract described in the series.
 output "config_facts" {
   description = "Stable infrastructure metadata for downstream configuration (AAP, Ep5)"
+  type = object({
+    cluster_endpoint = string
+    environment      = string
+    region           = string
+    vault_secret_ver = number
+  })
   value = {
     cluster_endpoint = component.cluster.cluster_url
     environment      = var.environment
